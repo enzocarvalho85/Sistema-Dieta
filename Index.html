@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sistema – Dieta Inteligente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #16a34a;
+      --accent-soft: #dcfce7;
+      --accent-strong: #166534;
+      --text-main: #111827;
+      --text-soft: #6b7280;
+      --border-soft: #e5e7eb;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    /* LOGIN */
+
+    .login-wrapper {
+      display: flex;
+      width: 100%;
+      max-width: 1120px;
+      padding: 32px 16px;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 840px) {
+      .login-wrapper {
+        flex-direction: column;
+      }
+    }
+
+    .login-hero {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .login-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: #ecfdf3;
+      color: var(--accent-strong);
+      border: 1px solid #bbf7d0;
+      width: fit-content;
+    }
+
+    .login-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 750;
+      letter-spacing: 0.02em;
+    }
+
+    .login-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 420px;
+    }
+
+    .login-bullets {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .login-bullets span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .login-card {
+      flex: 0.95;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 18px;
+      max-width: 380px;
+      width: 100%;
+    }
+
+    .login-card-header {
+      margin-bottom: 14px;
+    }
+
+    .login-card-title {
+      font-size: 1.05rem;
+      font-weight: 650;
+      margin-bottom: 4px;
+    }
+
+    .login-card-sub {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .login-form {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.86rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field label {
+      font-weight: 500;
+      font-size: 0.86rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.2);
+      background: #ffffff;
+    }
+
+    .field small {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .login-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.05s ease, box-shadow 0.05s ease,
+        background-color 0.1s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(22, 163, 74, 0.3);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .login-extra {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .login-extra a {
+      font-weight: 500;
+    }
+
+    .login-footer {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    /* DASHBOARD LAYOUT */
+
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+      background: var(--bg);
+      width: 100%;
+    }
+
+    .dashboard.visible {
+      display: flex;
+    }
+
+    .dash-shell {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 12px 24px;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .dash-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dash-sidebar {
+      background: #f9fafb;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: fit-content;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-strong);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 0.96rem;
+      font-weight: 650;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .nav-section-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .nav-item button {
+      width: 100%;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      cursor: pointer;
+    }
+
+    .nav-item button span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .nav-item button span.icon {
+      font-size: 0.9rem;
+    }
+
+    .nav-item button.active {
+      background: #e5f9ed;
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .nav-item button:hover:not(.active)) {
+      background: #e5e7eb;
+    }
+
+    .dash-sidebar-footer {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-soft);
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .link-logout {
+      font-size: 0.8rem;
+      color: #b91c1c;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .link-logout:hover {
+      text-decoration: underline;
+    }
+
+    .dash-main {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .dash-header-title {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .dash-header-title h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .dash-header-title p {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .dash-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid var(--border-soft);
+      font-size: 0.8rem;
+    }
+
+    .dash-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .dash-user-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .dash-user-name {
+      font-weight: 600;
+    }
+
+    .dash-user-meta {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .dash-main-content {
+      margin-top: 4px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* CARDS / ELEMENTOS GERAIS DO DASH */
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 13px 12px;
+      margin-bottom: 14px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 0.96rem;
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .chip-small {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid var(--border-soft);
+      color: var(--text-soft);
+    }
+
+    .card-body {
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .card-body p {
+      margin-bottom: 4px;
+    }
+
+    .tag-row,
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 6px;
+    }
+
+    .tag-pill {
+      font-size: 0.75rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: var(--text-soft);
+    }
+
+    .badge-list span {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px dashed var(--border-soft);
+      color: var(--text-soft);
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-soft);
+    }
+
+    .btn-outline:hover {
+      background: #f3f4f6;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 110px;
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: #f9fafb;
+      border: 1px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .stat-value {
+      font-size: 0.95rem;
+      font-weight: 650;
+    }
+
+    .stat-extra {
+      font-size: 0.75rem;
+      color: var(--accent-strong);
+    }
+
+    .list-simple {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .list-simple li {
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .card-footer {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .card-footer a {
+      font-weight: 500;
+    }
+
+    /* FORMULÁRIOS DAS SEÇÕES */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 720px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    .result-box {
+      background: #f9fafb;
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-top: 8px;
+    }
+
+    .result-box h3 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .result-box ul {
+      list-style: disc;
+      margin-left: 16px;
+      margin-top: 2px;
+      margin-bottom: 6px;
+    }
+
+    .result-box pre {
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+    }
+
+    .supplements-preview {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .supp-card {
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      padding: 6px 8px;
+      width: 160px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .supp-card img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      background: #e5e7eb;
+    }
+
+    .supp-card strong {
+      display: block;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-title-main {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title-main span {
+      font-size: 1.2rem;
+    }
+
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 960px) {
+      .days-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .days-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .day-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 10px 10px 9px;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .day-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .day-tag {
+      font-size: 0.73rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid var(--border-soft);
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .meal {
+      border-top: 1px solid #f3f4f6;
+      padding-top: 4px;
+      margin-top: 3px;
+    }
+
+    .meal:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .meal-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 2px;
+    }
+
+    .meal-list {
+      list-style: none;
+      margin-top: 0;
+    }
+
+    .meal-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 2px;
+      color: var(--text-soft);
+      font-size: 0.82rem;
+    }
+
+    .meal-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      margin-top: 1px;
+    }
+
+    .note {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 3px;
+    }
+
+    .materials-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+    }
+
+    .materials-list li::before {
+      content: "• ";
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- LOGIN -->
+    <section class="login" id="login-view">
+      <div class="login-wrapper">
+        <div class="login-hero">
+          <span class="login-pill">🥗 Dieta Inteligente com IA</span>
+          <h1 class="login-title">Entre na sua área de dieta personalizada</h1>
+          <p class="login-subtitle">
+            Gere planos de alimentação com IA, ajuste o dia quando sair da dieta
+            e acompanhe tudo em um painel simples e visual.
+          </p>
+          <div class="login-bullets">
+            <span>✅ Dieta ajustada para sua rotina e orçamento</span>
+            <span>🍫 Botão “consertar meu dia” quando sai do plano</span>
+            <span>🧃 Suplementos e cardápio base em um só lugar</span>
+          </div>
+        </div>
+
+        <div class="login-card" aria-label="Área de login">
+          <div class="login-card-header">
+            <h2 class="login-card-title">Acesse sua conta</h2>
+            <p class="login-card-sub">
+              Use o mesmo e-mail que você cadastrou na plataforma de pagamento.
+            </p>
+          </div>
+
+          <form class="login-form" id="login-form">
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="voce@exemplo.com"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="password">Senha</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Sua senha"
+                required
+              />
+            </div>
+
+            <div class="login-actions">
+              <button type="submit" class="btn btn-primary">
+                Entrar no painel
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-guest">
+                Entrar em modo demonstração
+              </button>
+            </div>
+
+            <div class="login-extra">
+              <a href="#">Esqueci minha senha</a>
+              <span>
+                Ainda não tenho acesso? <a href="#">Veja como adquirir</a>
+              </span>
+            </div>
+          </form>
+
+          <p class="login-footer">
+            Ao acessar, você concorda com os <a href="#">Termos de Uso</a> e
+            está ciente de que este sistema não substitui acompanhamento
+            profissional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard" id="dashboard-view" aria-label="Painel do usuário">
+      <div class="dash-shell">
+        <!-- Sidebar -->
+        <aside class="dash-sidebar">
+          <div class="brand">
+            <div class="brand-logo">DI</div>
+            <div class="brand-text">
+              <span class="brand-name">Dieta Inteligente</span>
+              <span class="brand-sub">Plano único, flexível</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="nav-section-title">Navegação</p>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <button class="nav-btn active" data-section="overview">
+                  <span class="label">Visão geral</span>
+                  <span class="icon">🏠</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-btn" data-section="plan-ia">
+                  <span class="label">Gerar/atualizar plano com IA</span>
+                  <span class="icon">⚙️</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-btn" data-section="adjust-day">
+                  <span class="label">Ajustar meu dia (saí da dieta)</span>
+                  <span class="icon">🍫</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-btn" data-section="cardapio">
+                  <span class="label">Cardápio base (7 dias)</span>
+                  <span class="icon">📅</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-btn" data-section="supplements">
+                  <span class="label">Suplementos</span>
+                  <span class="icon">🧃</span>
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-btn" data-section="materials">
+                  <span class="label">Materiais extras</span>
+                  <span class="icon">📄</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="dash-sidebar-footer">
+            <p>
+              Precisa de ajuda? <a href="#">Fale com o suporte</a>.
+            </p>
+            <div class="link-logout" id="logout-link">Sair da conta</div>
+          </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="dash-main">
+          <header class="dash-header">
+            <div class="dash-header-title">
+              <h1 id="section-title">Visão geral da sua dieta</h1>
+              <p id="section-subtitle">
+                Veja um resumo do seu plano, ajustes rápidos e atalhos para as principais ferramentas.
+              </p>
+            </div>
+
+            <div class="dash-user">
+              <div class="dash-avatar" id="avatar-initials">VC</div>
+              <div class="dash-user-info">
+                <span class="dash-user-name" id="user-name">Você</span>
+                <span class="dash-user-meta">Plano ativo · 1 acesso</span>
+              </div>
+            </div>
+          </header>
+
+          <section class="dash-main-content">
+            <!-- SECTION: OVERVIEW -->
+            <div class="section active" id="section-overview">
+              <section class="two-cols">
+                <!-- Card principal: IA -->
+                <article class="card">
+                  <div class="card-header">
+                    <div>
+                      <h2 class="card-title">Plano com IA</h2>
+                      <p class="card-sub">
+                        Gere, atualize e ajuste sua dieta conforme sua rotina, meta e orçamento.
+                      </p>
+                    </div>
+                    <span class="chip-small">Personalizado em tempo real</span>
+                  </div>
+
+                  <div class="card-body">
+                    <p>
+                      Com base nos seus dados (peso, altura, idade, nível de
+                      atividade e orçamento), a IA faz uma estimativa de calorias
+                      e proteína, e organiza as refeições ao longo do dia.
+                    </p>
+
+                    <div class="tag-row">
+                      <span class="tag-pill">🎯 Déficit calórico controlado</span>
+                      <span class="tag-pill">💪 Proteína preservada</span>
+                      <span class="tag-pill">💸 Ajuste ao seu bolso</span>
+                    </div>
+
+                    <div class="quick-actions">
+                      <button class="btn-outline" data-goto="plan-ia">
+                        ⚙️ Gerar/atualizar meu plano
+                      </button>
+                      <button class="btn-outline" data-goto="plan-ia">
+                        📊 Ver resumo atual
+                      </button>
+                    </div>
+
+                    <div class="stats-row">
+                      <div class="stat">
+                        <span class="stat-label">Calorias alvo (estimado)</span>
+                        <span class="stat-value" id="stat-kcal">–</span>
+                        <span class="stat-extra">Com base no seu perfil</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-label">Proteína/dia (estimado)</span>
+                        <span class="stat-value" id="stat-protein">–</span>
+                        <span class="stat-extra">Meta para preservar massa magra</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-footer">
+                    Use o gerador sempre que sua rotina mudar (horários, treinos,
+                    peso atual). <a href="#" data-goto="plan-ia">Abrir gerador de plano</a>
+                  </div>
+                </article>
+
+                <!-- Card: Ajustar meu dia -->
+                <article class="card">
+                  <div class="card-header">
+                    <div>
+                      <h2 class="card-title">Ajustar meu dia (saí da dieta)</h2>
+                      <p class="card-sub">
+                        Comeu um chocolate no almoço? Registre aqui e o sistema
+                        recalcula o restante do dia.
+                      </p>
+                    </div>
+                    <span class="chip-small">Função anti “já estraguei tudo”</span>
+                  </div>
+
+                  <div class="card-body">
+                    <p>
+                      Em vez de desistir do dia inteiro, você registra o
+                      “deslize” e recebe uma sugestão de como ajustar lanche e
+                      jantar, sem extremos.
+                    </p>
+                    <ul class="list-simple">
+                      <li>
+                        <span class="dot"></span> Informe o que saiu do plano
+                      </li>
+                      <li>
+                        <span class="dot"></span> Veja o saldo de calorias
+                        atualizado
+                      </li>
+                      <li>
+                        <span class="dot"></span> Receba sugestão de ajustes
+                        saudáveis
+                      </li>
+                    </ul>
+
+                    <div class="quick-actions">
+                      <button class="btn-outline" data-goto="adjust-day">
+                        🍫 Registrar o que eu comi
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card-footer">
+                    Seu processo é mais importante do que um dia perfeito.
+                    <a href="#" data-goto="adjust-day">Abrir ajuste do dia</a>
+                  </div>
+                </article>
+              </section>
+
+              <section class="two-cols" style="margin-top: 10px;">
+                <!-- Cardápio base resumo -->
+                <article class="card">
+                  <div class="card-header">
+                    <div>
+                      <h2 class="card-title">Cardápio base (7 dias)</h2>
+                      <p class="card-sub">
+                        Tenha sempre um modelo pronto para seguir e adaptar com a IA.
+                      </p>
+                    </div>
+                    <span class="chip-small">Modelo pronto</span>
+                  </div>
+                  <div class="card-body">
+                    <p>
+                      O cardápio base trabalha com café da manhã, almoço, lanche e
+                      jantar usando alimentos acessíveis (arroz, feijão, frango, ovo,
+                      frutas simples).
+                    </p>
+                    <div class="badge-list">
+                      <span>🌅 Café com proteína</span>
+                      <span>☀️ Almoço equilibrado</span>
+                      <span>🕓 Lanche sem exagero</span>
+                      <span>🌙 Jantar leve</span>
+                    </div>
+                    <div class="quick-actions">
+                      <button class="btn-outline" data-goto="cardapio">
+                        📅 Ver cardápio completo
+                      </button>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Suplementos resumo -->
+                <article class="card">
+                  <div class="card-header">
+                    <div>
+                      <h2 class="card-title">Suplementos & materiais</h2>
+                      <p class="card-sub">
+                        Organize whey, creatina e acesse guias extras de apoio.
+                      </p>
+                    </div>
+                    <span class="chip-small">Organização em um só lugar</span>
+                  </div>
+                  <div class="card-body">
+                    <p>
+                      Cadastre os suplementos que você usa (foto, marca, dose) e
+                      tenha tudo anotado para encaixar melhor no seu plano.
+                    </p>
+                    <div class="quick-actions">
+                      <button class="btn-outline" data-goto="supplements">
+                        🧃 Cadastrar suplementos
+                      </button>
+                      <button class="btn-outline" data-goto="materials">
+                        📄 Ver materiais extras
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </section>
+            </div>
+
+            <!-- SECTION: GERAR PLANO COM IA -->
+            <div class="section" id="section-plan-ia">
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Gerar/atualizar plano com IA</h2>
+                    <p class="card-sub">
+                      Preencha seus dados e receba uma estimativa de calorias,
+                      proteína e foco do plano. Isso roda 100% no navegador (sem IA externa ainda).
+                    </p>
+                  </div>
+                  <span class="chip-small">Versão protótipo</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="two-cols">
+                    <div>
+                      <form id="ia-form" class="form-grid">
+                        <div class="field">
+                          <label for="ia-sex">Sexo</label>
+                          <select id="ia-sex" required>
+                            <option value="f">Feminino</option>
+                            <option value="m">Masculino</option>
+                          </select>
+                        </div>
+                        <div class="field">
+                          <label for="ia-age">Faixa etária</label>
+                          <select id="ia-age" required>
+                            <option value="18-29">18–29</option>
+                            <option value="30-39">30–39</option>
+                            <option value="40-49">40–49</option>
+                            <option value="50-59">50–59</option>
+                            <option value="60-69">60–69</option>
+                          </select>
+                        </div>
+                        <div class="field">
+                          <label for="ia-weight">Peso (kg)</label>
+                          <input type="number" id="ia-weight" step="0.1" min="30" max="250" required />
+                        </div>
+                        <div class="field">
+                          <label for="ia-height">Altura (cm)</label>
+                          <input type="number" id="ia-height" step="0.5" min="130" max="220" required />
+                        </div>
+                        <div class="field">
+                          <label for="ia-activity">Nível de atividade</label>
+                          <select id="ia-activity">
+                            <option value="1.45">Minha rotina (caminhada + funcional)</option>
+                            <option value="1.2">Bem parada (sem exercício)</option>
+                            <option value="1.3">Levemente ativa</option>
+                            <option value="1.55">Ativa (treino quase todo dia)</option>
+                          </select>
+                          <small>Usado para estimar o gasto calórico diário.</small>
+                        </div>
+                        <div class="field">
+                          <label for="ia-goal">Meta principal</label>
+                          <select id="ia-goal">
+                            <option value="cut">Emagrecer</option>
+                            <option value="maintain">Manter peso</option>
+                            <option value="bulk">Ganhar massa magra</option>
+                          </select>
+                        </div>
+                        <div class="field">
+                          <label for="ia-budget">Orçamento aproximado por dia (R$)</label>
+                          <input type="number" id="ia-budget" step="1" min="0" placeholder="Ex.: 25" />
+                        </div>
+                        <div class="field field-full">
+                          <label for="ia-preferences">Observações / preferências</label>
+                          <textarea id="ia-preferences" placeholder="Ex.: não como porco, prefiro frango e ovo, gosto de banana..."></textarea>
+                        </div>
+                        <div class="field field-full">
+                          <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">Gerar plano</button>
+                            <button type="button" class="btn btn-secondary" id="ia-clear">Limpar</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div>
+                      <div class="result-box" id="ia-result">
+                        <h3>Como funciona?</h3>
+                        <p>
+                          1. Preencha seus dados (sexo, idade, peso, altura, atividade).<br>
+                          2. Se quiser, informe meta e orçamento aproximado por dia.<br>
+                          3. Clique em <strong>“Gerar plano”</strong> para ver:
+                        </p>
+                        <ul>
+                          <li>Estimativa de gasto calórico diário (TDEE).</li>
+                          <li>Calorias sugeridas para sua meta.</li>
+                          <li>Faixa de proteína por dia.</li>
+                          <li>Resumo de foco para sua dieta.</li>
+                        </ul>
+                        <p style="font-size:0.78rem;">
+                          No futuro, essa tela pode ser conectada a uma IA real (OpenAI, por
+                          exemplo), usando esse cálculo como base para montar um cardápio
+                          completo para você.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- SECTION: AJUSTAR DIA -->
+            <div class="section" id="section-adjust-day">
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Ajustar meu dia (saí da dieta)</h2>
+                    <p class="card-sub">
+                      Informe seu alvo de calorias, o que já consumiu e o “deslize”.
+                      O sistema calcula o saldo e dá uma sugestão geral.
+                    </p>
+                  </div>
+                  <span class="chip-small">Ajuste rápido do dia</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="two-cols">
+                    <div>
+                      <form id="adjust-form" class="form-grid">
+                        <div class="field">
+                          <label for="adj-target">Calorias alvo do dia (kcal)</label>
+                          <input type="number" id="adj-target" min="800" max="4000" placeholder="Ex.: 2000" />
+                          <small>Se já gerou plano com IA, pode usar o valor sugerido.</small>
+                        </div>
+                        <div class="field">
+                          <label for="adj-consumed">Calorias consumidas até agora (kcal)</label>
+                          <input type="number" id="adj-consumed" min="0" max="4000" placeholder="Ex.: 900" />
+                        </div>
+                        <div class="field field-full">
+                          <label for="adj-food">O que você comeu fora do plano?</label>
+                          <input type="text" id="adj-food" placeholder="Ex.: Chocolate ao leite 30 g" />
+                        </div>
+                        <div class="field">
+                          <label for="adj-kcal-extra">Estimativa de calorias do deslize (kcal)</label>
+                          <input type="number" id="adj-kcal-extra" min="0" max="2000" placeholder="Ex.: 180" />
+                          <small>Se não souber, faça uma aproximação.</small>
+                        </div>
+                        <div class="field field-full">
+                          <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">Calcular e ajustar</button>
+                            <button type="button" class="btn btn-secondary" id="adj-clear">Limpar</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div>
+                      <div class="result-box" id="adj-result">
+                        <h3>Pronta para salvar o dia 😉</h3>
+                        <p>
+                          Use esta tela quando rolar um “deslize” (chocolate, pizza, refri...).
+                          Em vez de desistir do dia todo, você ajusta:
+                        </p>
+                        <ul>
+                          <li>Vê quanto ainda tem de calorias restantes.</li>
+                          <li>Recebe uma sugestão geral: reduzir carbo/gordura, manter proteína.</li>
+                          <li>Lembra de evitar compensações loucas (tipo passar fome).</li>
+                        </ul>
+                        <p style="font-size:0.78rem;">
+                          Em uma versão com IA conectada, essa função poderia recalcular
+                          exatamente lanche e jantar com base no cardápio do dia.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- SECTION: CARDÁPIO BASE -->
+            <div class="section" id="section-cardapio">
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Cardápio base de 7 dias</h2>
+                    <p class="card-sub">
+                      Modelo pronto de semana, baseado em arroz, feijão, proteína e lanches simples.
+                    </p>
+                  </div>
+                  <span class="chip-small">Versão base</span>
+                </div>
+
+                <div class="card-body">
+                  <p class="section-sub">
+                    Use este cardápio como referência. Você pode combinar com o plano da IA
+                    (calorias/proteínas) e ir ajustando por porção. A ideia é ser simples e
+                    repetível.
+                  </p>
+
+                  <div class="days-grid">
+                    <!-- Dia 1 (exemplo reduzido) -->
+                    <article class="day-card">
+                      <div class="day-header">
+                        <h3 class="day-title">Dia 1 <span>💚</span></h3>
+                        <span class="day-tag">Sugestão: dia com funcional</span>
+                      </div>
+                      <div>
+                        <div class="meal">
+                          <div class="meal-title">🌅 Café da manhã</div>
+                          <ul class="meal-list">
+                            <li>1 fatia de pão integral + pasta de amendoim</li>
+                            <li>1 ovo mexido ou cozido</li>
+                            <li>Café sem açúcar ou com adoçante</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">☀️ Almoço</div>
+                          <ul class="meal-list">
+                            <li>3 colheres de sopa de arroz + 1 concha de feijão</li>
+                            <li>Frango grelhado (palma da mão)</li>
+                            <li>Salada de alface, tomate e cenoura</li>
+                            <li>1 paçoca pequena (opcional)</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🕓 Lanche</div>
+                          <ul class="meal-list">
+                            <li>1 maçã</li>
+                            <li>1 iogurte natural ou grego light</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🌙 Jantar</div>
+                          <ul class="meal-list">
+                            <li>Salada grande + ovos mexidos (2 unidades)</li>
+                            <li>2 colheres de sopa de arroz</li>
+                            <li>1 fruta com canela</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- Dia 2 -->
+                    <article class="day-card">
+                      <div class="day-header">
+                        <h3 class="day-title">Dia 2 <span>🙂</span></h3>
+                        <span class="day-tag">Sugestão: dia sem funcional</span>
+                      </div>
+                      <div>
+                        <div class="meal">
+                          <div class="meal-title">🌅 Café</div>
+                          <ul class="meal-list">
+                            <li>Pão integral + queijo branco</li>
+                            <li>Pasta de amendoim (1 colher rasa)</li>
+                            <li>Meia banana fatiada</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">☀️ Almoço</div>
+                          <ul class="meal-list">
+                            <li>Arroz + feijão (porções moderadas)</li>
+                            <li>Carne magra grelhada</li>
+                            <li>Salada de rúcula e tomate</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🕓 Lanche</div>
+                          <ul class="meal-list">
+                            <li>Banana com aveia e canela</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🌙 Jantar</div>
+                          <ul class="meal-list">
+                            <li>Salada (alface, tomate, beterraba)</li>
+                            <li>Frango desfiado refogado</li>
+                            <li>Sem carbo ou só 1 colher de arroz</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- Dia 3 -->
+                    <article class="day-card">
+                      <div class="day-header">
+                        <h3 class="day-title">Dia 3 <span>💪</span></h3>
+                        <span class="day-tag">Sugestão: dia com funcional</span>
+                      </div>
+                      <div>
+                        <div class="meal">
+                          <div class="meal-title">🌅 Café</div>
+                          <ul class="meal-list">
+                            <li>Pão integral + ovo mexido</li>
+                            <li>Pasta de amendoim (1 colher rasa)</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">☀️ Almoço</div>
+                          <ul class="meal-list">
+                            <li>Arroz + feijão</li>
+                            <li>Peixe grelhado</li>
+                            <li>Salada de repolho com cenoura</li>
+                            <li>1 paçoca pequena (opcional)</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🕓 Lanche</div>
+                          <ul class="meal-list">
+                            <li>Iogurte + aveia + maçã picada</li>
+                          </ul>
+                        </div>
+                        <div class="meal">
+                          <div class="meal-title">🌙 Jantar</div>
+                          <ul class="meal-list">
+                            <li>Salada colorida</li>
+                            <li>Ovos cozidos/mexidos</li>
+                            <li>2 colheres de arroz ou 1 batata pequena</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- Dia 4, 5, 6, 7 podem seguir a mesma lógica; você pode duplicar e adaptar se quiser mais detalhes -->
+                  </div>
+
+                  <p class="note">
+                    Você pode adaptar as porções conforme o plano de calorias/proteína gerado na aba
+                    “Plano com IA”.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- SECTION: SUPPLEMENTS -->
+            <div class="section" id="section-supplements">
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Suplementos</h2>
+                    <p class="card-sub">
+                      Cadastre aqui os suplementos que você usa (whey, creatina, etc.) para
+                      ter tudo organizado.
+                    </p>
+                  </div>
+                  <span class="chip-small">Organização pessoal</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="two-cols">
+                    <div>
+                      <form id="supp-form" class="form-grid">
+                        <div class="field field-full">
+                          <small>Preencha os campos que fizerem sentido para você. Até 3 produtos.</small>
+                        </div>
+
+                        <!-- Produto 1 -->
+                        <div class="field">
+                          <label>Produto 1 – nome/marca</label>
+                          <input type="text" class="supp-name" placeholder="Ex.: Whey Gold X" />
+                        </div>
+                        <div class="field">
+                          <label>Foto (URL)</label>
+                          <input type="url" class="supp-img" placeholder="Link da imagem (opcional)" />
+                        </div>
+                        <div class="field field-full">
+                          <label>Informações (dose, proteína, etc.)</label>
+                          <input type="text" class="supp-notes" placeholder="Ex.: 25 g de proteína por scoop, usar 1x ao dia" />
+                        </div>
+
+                        <!-- Produto 2 -->
+                        <div class="field">
+                          <label>Produto 2 – nome/marca</label>
+                          <input type="text" class="supp-name" placeholder="Ex.: Creatina Y" />
+                        </div>
+                        <div class="field">
+                          <label>Foto (URL)</label>
+                          <input type="url" class="supp-img" placeholder="Link da imagem (opcional)" />
+                        </div>
+                        <div class="field field-full">
+                          <label>Informações</label>
+                          <input type="text" class="supp-notes" placeholder="Ex.: 3 g por dia, independente de treino" />
+                        </div>
+
+                        <!-- Produto 3 -->
+                        <div class="field">
+                          <label>Produto 3 – nome/marca</label>
+                          <input type="text" class="supp-name" placeholder="Outro suplemento" />
+                        </div>
+                        <div class="field">
+                          <label>Foto (URL)</label>
+                          <input type="url" class="supp-img" placeholder="Link da imagem (opcional)" />
+                        </div>
+                        <div class="field field-full">
+                          <label>Informações</label>
+                          <input type="text" class="supp-notes" placeholder="Notas adicionais" />
+                        </div>
+
+                        <div class="field field-full">
+                          <div class="login-actions">
+                            <button type="button" class="btn btn-primary" id="supp-save">
+                              Atualizar visualização
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="supp-clear">
+                              Limpar tudo
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div>
+                      <div class="result-box">
+                        <h3>Seus suplementos cadastrados</h3>
+                        <p style="margin-bottom:6px;">
+                          Esta parte é só organização visual, para você lembrar o que está usando.
+                          Em um próximo passo, essas informações poderiam ser enviadas para a IA
+                          montar o plano considerando esses produtos.
+                        </p>
+                        <div class="supplements-preview" id="supp-preview"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- SECTION: MATERIAIS -->
+            <div class="section" id="section-materials">
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Materiais extras</h2>
+                    <p class="card-sub">
+                      Espaço para guias, PDFs e conteúdos de apoio ao seu plano.
+                    </p>
+                  </div>
+                  <span class="chip-small">Conteúdo complementar</span>
+                </div>
+
+                <div class="card-body">
+                  <p class="section-sub">
+                    Aqui você pode listar links de materiais (PDFs, vídeos, posts)
+                    que fazem parte do seu produto, como:
+                  </p>
+                  <ul class="materials-list">
+                    <li>Guia de lanches rápidos e baratos</li>
+                    <li>Guia de marmitas para a semana</li>
+                    <li>Guia de trocas inteligentes (substituições)</li>
+                    <li>Checklist de compras básicas do mês</li>
+                  </ul>
+                  <p class="note">
+                    Por enquanto está como exemplo. Na versão final, é só trocar pelos links reais
+                    dos seus materiais.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Estado simples do "plano" gerado
+    const planState = {
+      tdee: null,
+      deficitLow: null,
+      deficitHigh: null,
+      proteinLow: null,
+      proteinHigh: null
+    };
+
+    function parseNumber(value) {
+      if (typeof value !== "string") return NaN;
+      return parseFloat(value.replace(",", "."));
+    }
+
+    // LOGIN / DASHBOARD
+    const loginView = document.getElementById("login-view");
+    const dashboardView = document.getElementById("dashboard-view");
+    const loginForm = document.getElementById("login-form");
+    const btnGuest = document.getElementById("btn-guest");
+    const logoutLink = document.getElementById("logout-link");
+    const userNameEl = document.getElementById("user-name");
+    const avatarInitialsEl = document.getElementById("avatar-initials");
+
+    function showDashboard(nameOrEmail) {
+      const displayName =
+        nameOrEmail && nameOrEmail.includes("@")
+          ? nameOrEmail.split("@")[0]
+          : nameOrEmail || "Você";
+
+      userNameEl.textContent = displayName;
+      const initials = displayName
+        .split(" ")
+        .map((p) => p[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+      avatarInitialsEl.textContent = initials || "VC";
+
+      loginView.style.display = "none";
+      dashboardView.classList.add("visible");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      showDashboard(email || "Você");
+    });
+
+    btnGuest.addEventListener("click", function () {
+      showDashboard("Convidado");
+    });
+
+    logoutLink.addEventListener("click", function () {
+      dashboardView.classList.remove("visible");
+      loginView.style.display = "block";
+      loginForm.reset();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // NAVEGAÇÃO ENTRE SEÇÕES DO DASH
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const sections = document.querySelectorAll(".section");
+    const sectionTitle = document.getElementById("section-title");
+    const sectionSubtitle = document.getElementById("section-subtitle");
+
+    const SECTION_TEXT = {
+      "overview": {
+        title: "Visão geral da sua dieta",
+        subtitle: "Veja um resumo do seu plano, ajustes rápidos e atalhos para as principais ferramentas."
+      },
+      "plan-ia": {
+        title: "Plano com IA (protótipo)",
+        subtitle: "Preencha seus dados para gerar um resumo de calorias, proteína e foco da dieta."
+      },
+      "adjust-day": {
+        title: "Ajustar meu dia (saí da dieta)",
+        subtitle: "Informe o deslize e veja como ajustar o restante do dia de forma equilibrada."
+      },
+      "cardapio": {
+        title: "Cardápio base de 7 dias",
+        subtitle: "Use o modelo de semana como referência e adapte conforme seu plano."
+      },
+      "supplements": {
+        title: "Suplementos",
+        subtitle: "Organize os suplementos que você usa para ter tudo à vista."
+      },
+      "materials": {
+        title: "Materiais extras",
+        subtitle: "Acesse guias e conteúdos complementares ao seu plano."
+      }
+    };
+
+    function showSection(id) {
+      sections.forEach(sec => {
+        sec.classList.toggle("active", sec.id === "section-" + id);
+      });
+      navButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.section === id);
+      });
+      if (SECTION_TEXT[id]) {
+        sectionTitle.textContent = SECTION_TEXT[id].title;
+        sectionSubtitle.textContent = SECTION_TEXT[id].subtitle;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.section;
+        showSection(id);
+      });
+    });
+
+    // Links que navegam entre seções (data-goto)
+    document.addEventListener("click", (e) => {
+      const target = e.target.closest("[data-goto]");
+      if (target) {
+        e.preventDefault();
+        const id = target.getAttribute("data-goto");
+        showSection(id);
+      }
+    });
+
+    // IA: GERAR PLANO (PROTO)
+    const iaForm = document.getElementById("ia-form");
+    const iaResult = document.getElementById("ia-result");
+    const iaClear = document.getElementById("ia-clear");
+    const statKcal = document.getElementById("stat-kcal");
+    const statProtein = document.getElementById("stat-protein");
+
+    iaClear.addEventListener("click", () => {
+      iaForm.reset();
+      iaResult.innerHTML = `
+        <h3>Plano limpo</h3>
+        <p>Preencha novamente seus dados e clique em <strong>“Gerar plano”</strong>.</p>
+      `;
+      statKcal.textContent = "–";
+      statProtein.textContent = "–";
+      planState.tdee = null;
+    });
+
+    iaForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const sex = document.getElementById("ia-sex").value;
+      const ageGroup = document.getElementById("ia-age").value;
+      const weight = parseNumber(document.getElementById("ia-weight").value);
+      const height = parseNumber(document.getElementById("ia-height").value);
+      const activity = parseFloat(document.getElementById("ia-activity").value || "1.45");
+      const goal = document.getElementById("ia-goal").value;
+      const budget = parseNumber(document.getElementById("ia-budget").value);
+      const prefs = document.getElementById("ia-preferences").value.trim();
+
+      if (!weight || !height) {
+        iaResult.innerHTML = "<p>Por favor, preencha pelo menos peso e altura corretamente.</p>";
+        return;
+      }
+
+      const ageMap = {
+        "18-29": 24,
+        "30-39": 34,
+        "40-49": 44,
+        "50-59": 54,
+        "60-69": 64
+      };
+      const age = ageMap[ageGroup] || 30;
+
+      // Mifflin-St Jeor
+      let bmr = 10 * weight + 6.25 * height - 5 * age;
+      bmr += sex === "f" ? -161 : 5;
+
+      const tdee = bmr * activity;
+
+      let lowFactor = 0.8;
+      let highFactor = 0.85;
+      if (goal === "maintain") {
+        lowFactor = 0.95;
+        highFactor = 1.05;
+      } else if (goal === "bulk") {
+        lowFactor = 1.05;
+        highFactor = 1.15;
+      }
+
+      const targetLow = tdee * lowFactor;
+      const targetHigh = tdee * highFactor;
+
+      let proteinLow = weight * 1.6;
+      let proteinHigh = weight * 2.0;
+      if (goal === "bulk") {
+        proteinLow = weight * 1.8;
+        proteinHigh = weight * 2.2;
+      }
+
+      let budgetText = "Você não informou orçamento, então foque em alimentos simples e acessíveis como arroz, feijão, ovo, frango, banana e aveia.";
+      if (!isNaN(budget) && budget > 0) {
+        if (budget < 20) {
+          budgetText =
+            `Orçamento de cerca de R$ ${budget.toFixed(2)} por dia: foco em opções mais baratas ` +
+            `(arroz, feijão, ovo, frango em promoção, sardinha, legumes da estação).`;
+        } else if (budget <= 35) {
+          budgetText =
+            `Orçamento de cerca de R$ ${budget.toFixed(2)} por dia: dá para manter uma base simples ` +
+            `e incluir frutas variadas, iogurte light e, eventualmente, um suplemento.`;
+        } else {
+          budgetText =
+            `Orçamento de cerca de R$ ${budget.toFixed(2)} por dia: você consegue variar bastante nas receitas ` +
+            `e usar suplementos com mais liberdade.`;
+        }
+      }
+
+      let goalText = "Foco em leve déficit calórico para emagrecimento gradual e sustentável.";
+      if (goal === "maintain") {
+        goalText = "Foco em manter o peso atual, melhorando qualidade da alimentação e saciedade.";
+      } else if (goal === "bulk") {
+        goalText = "Foco em leve superávit calórico para ganho de massa magra, com proteína bem distribuída.";
+      }
+
+      // Atualiza estado global
+      planState.tdee = tdee;
+      planState.deficitLow = targetLow;
+      planState.deficitHigh = targetHigh;
+      planState.proteinLow = proteinLow;
+      planState.proteinHigh = proteinHigh;
+
+      statKcal.textContent = `${Math.round(targetLow)}–${Math.round(targetHigh)} kcal`;
+      statProtein.textContent = `${Math.round(proteinLow)}–${Math.round(proteinHigh)} g`;
+
+      iaResult.innerHTML = `
+        <h3>Resumo do seu plano</h3>
+        <p><strong>Sexo:</strong> ${sex === "f" ? "Feminino" : "Masculino"} • <strong>Faixa etária:</strong> ${ageGroup}</p>
+        <p><strong>Meta:</strong> ${
+          goal === "cut" ? "Emagrecer" : goal === "maintain" ? "Manter peso" : "Ganhar massa magra"
+        }</p>
+        <p><strong>Peso:</strong> ${weight.toFixed(1)} kg • <strong>Altura:</strong> ${height.toFixed(0)} cm</p>
+        <p><strong>Gasto calórico estimado (TDEE):</strong> ~${tdee.toFixed(0)} kcal/dia</p>
+        <p><strong>Calorias sugeridas para sua meta:</strong> entre ${targetLow.toFixed(
+          0
+        )} e ${targetHigh.toFixed(0)} kcal/dia.</p>
+        <p><strong>Proteína diária recomendada:</strong> entre ${proteinLow.toFixed(
+          0
+        )} g e ${proteinHigh.toFixed(0)} g por dia.</p>
+        <p>${budgetText}</p>
+        <p><strong>Foco da dieta:</strong> ${goalText}</p>
+        ${
+          prefs
+            ? `<p><strong>Suas observações:</strong> ${prefs}</p>`
+            : ""
+        }
+      `;
+    });
+
+    // AJUSTAR DIA
+    const adjForm = document.getElementById("adjust-form");
+    const adjResult = document.getElementById("adj-result");
+    const adjClear = document.getElementById("adj-clear");
+    const adjTargetInput = document.getElementById("adj-target");
+
+    // Se tiver plano, sugerir alvo
+    function suggestTargetFromPlan() {
+      if (planState.deficitLow && planState.deficitHigh) {
+        const mid = (planState.deficitLow + planState.deficitHigh) / 2;
+        adjTargetInput.placeholder = `Sugestão: ~${Math.round(mid)} kcal`;
+      }
+    }
+    suggestTargetFromPlan();
+
+    adjClear.addEventListener("click", () => {
+      adjForm.reset();
+      adjResult.innerHTML = `
+        <h3>Pronta para salvar o dia 😉</h3>
+        <p>
+          Use esta tela quando rolar um “deslize” (chocolate, pizza, refri...).
+          Em vez de desistir do dia todo, você ajusta:
+        </p>
+        <ul>
+          <li>Vê quanto ainda tem de calorias restantes.</li>
+          <li>Recebe uma sugestão geral: reduzir carbo/gordura, manter proteína.</li>
+          <li>Lembra de evitar compensações loucas (tipo passar fome).</li>
+        </ul>
+        <p style="font-size:0.78rem;">
+          Em uma versão com IA conectada, essa função poderia recalcular
+          exatamente lanche e jantar com base no cardápio do dia.
+        </p>
+      `;
+    });
+
+    adjForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let target = parseNumber(document.getElementById("adj-target").value);
+      const consumed = parseNumber(document.getElementById("adj-consumed").value) || 0;
+      const food = document.getElementById("adj-food").value.trim() || "alimento extra";
+      const extraKcal = parseNumber(document.getElementById("adj-kcal-extra").value) || 0;
+
+      if (!target) {
+        // se não foi informado, tenta usar o plano
+        if (planState.deficitLow && planState.deficitHigh) {
+          target = (planState.deficitLow + planState.deficitHigh) / 2;
+        } else {
+          target = 2000; // fallback
+        }
+      }
+
+      const used = consumed + extraKcal;
+      const remaining = target - used;
+
+      let message = "";
+      if (remaining >= 400) {
+        message =
+          "Ainda dá para ajustar o dia com calma. Mantenha proteína nas próximas refeições, reduza um pouco carboidratos (principalmente massas, pães e doces) e evite acrescentar mais frituras.";
+      } else if (remaining >= 150) {
+        message =
+          "Seu saldo de calorias ficou mais apertado. Foque em uma ou duas refeições mais leves: salada em boa quantidade, uma fonte de proteína magra e pouco carboidrato, evitando sobremesas hoje.";
+      } else if (remaining >= 0) {
+        message =
+          "Quase chegou no limite do dia. Procure fazer uma refeição leve e rica em proteína e saladas, sem carboidrato extra e sem doces. Hidrate-se bem e volte ao plano normalmente amanhã.";
+      } else {
+        message =
+          "Você ultrapassou a meta de calorias do dia. Não precisa se punir nem tentar compensar com loucuras (como ficar sem comer). Apenas faça uma refeição leve agora, evite beliscos no restante do dia e retome o plano normalmente amanhã.";
+      }
+
+      adjResult.innerHTML = `
+        <h3>Resumo do ajuste do dia</h3>
+        <p><strong>Alvo de hoje:</strong> ${Math.round(target)} kcal</p>
+        <p><strong>Já consumido (antes do deslize):</strong> ${Math.round(consumed)} kcal</p>
+        <p><strong>${food}:</strong> ~${Math.round(extraKcal)} kcal</p>
+        <p><strong>Total consumido:</strong> ${Math.round(used)} kcal</p>
+        <p><strong>Saldo restante estimado:</strong> ${Math.round(remaining)} kcal</p>
+        <p style="margin-top:4px;">${message}</p>
+      `;
+    });
+
+    // SUPPLEMENTS
+    const suppForm = document.getElementById("supp-form");
+    const suppPreview = document.getElementById("supp-preview");
+    const suppSave = document.getElementById("supp-save");
+    const suppClear = document.getElementById("supp-clear");
+
+    function updateSuppPreview() {
+      const nameEls = suppForm.querySelectorAll(".supp-name");
+      const imgEls = suppForm.querySelectorAll(".supp-img");
+      const noteEls = suppForm.querySelectorAll(".supp-notes");
+
+      const supplements = [];
+      for (let i = 0; i < nameEls.length; i++) {
+        const name = nameEls[i].value.trim();
+        const img = imgEls[i].value.trim();
+        const notes = noteEls[i].value.trim();
+        if (name || img || notes) {
+          supplements.push({ name, img, notes });
+        }
+      }
+
+      suppPreview.innerHTML = "";
+      if (supplements.length === 0) {
+        suppPreview.innerHTML = "<p style='font-size:0.8rem;'>Nenhum suplemento cadastrado ainda.</p>";
+        return;
+      }
+
+      supplements.forEach(s => {
+        const card = document.createElement("div");
+        card.className = "supp-card";
+        let imgHtml = "";
+        if (s.img) {
+          imgHtml = `<img src="${s.img}" alt="${s.name || "Suplemento"}" onerror="this.style.display='none';" />`;
+        }
+        card.innerHTML = `
+          ${imgHtml}
+          <strong>${s.name || "Suplemento"}</strong>
+          <span>${s.notes || "Sem informações adicionais"}</span>
+        `;
+        suppPreview.appendChild(card);
+      });
+    }
+
+    suppSave.addEventListener("click", () => {
+      updateSuppPreview();
+    });
+
+    suppClear.addEventListener("click", () => {
+      suppForm.reset();
+      updateSuppPreview();
+    });
+
+    // inicial
+    updateSuppPreview();
+  </script>
+</body>
+</html>
